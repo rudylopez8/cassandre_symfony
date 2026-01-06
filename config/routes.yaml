@@ -9,3 +9,35 @@
 
 controllers:
     resource: routing.controllers
+
+index:
+    path: /
+    controller: App\Controller\DefaultController::index
+
+login:
+    path: /login
+    controller: App\Controller\LoginController::login
+
+admin:
+    path: /admin
+    controller: App\Controller\AdminController::admin
+
+audit:
+    path: /audit
+    controller: App\Controller\AuditController::list
+
+audit_details:
+    path: /audit/{id}
+    controller: App\Controller\AuditController::details
+    requirements:
+        id: '\d+'
+
+certification:
+    path: /certification
+    controller: App\Controller\CertificationController::list
+
+certification_details:
+    path: /certification/{id}
+    controller: App\Controller\CertificationController::details
+    requirements:
+        id: '\d+'

@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Audits – Cassandre Communication{% endblock %}
+
+{% block body %}
+    <h2>Liste des Audits</h2>
+
+    <div class="mb-3 d-flex justify-content-between">
+        <div>
+            <button class="btn btn-success"><i class="fa-solid fa-plus me-1"></i> Nouvel Audit</button>
+        </div>
+        <div>
+            <input type="search" class="form-control" placeholder="Rechercher…">
+        </div>
+    </div>
+
+    <table class="table table-hover table-striped align-middle">
+        <thead class="table-light">
+            <tr>
+                <th>#</th>
+                <th>Client</th>
+                <th>Référence</th>
+                <th>Statut</th>
+                <th>Planifié le</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>001</td>
+                <td>Acme Corp.</td>
+                <td>AUD-2025-01</td>
+                <td><span class="badge bg-warning text-dark">En cours</span></td>
+                <td>2025‑07‑12</td>
+                <td>
+                    <a href="{{ path('audit_details', {'id': 1}) }}" class="btn btn-sm btn-outline-primary">Détails</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+{% endblock %}
