@@ -1,0 +1,62 @@
+@startuml UseCase
+!define AWSPUML https://raw.githubusercontent.com/awslabs/aws-icons-for-plantuml/v14.0/Advanced/AWSCommon.puml
+skinparam backgroundColor #F5F5F5
+skinparam defaultTextAlignment center
+skinparam actorBorderColor #1F78B4
+skinparam actorFontColor #1F78B4
+skinparam usecaseBorderColor #33A02C
+skinparam usecaseFontColor #33A02C
+
+actor Auditeur
+actor ResponsableMission
+actor ServiceAdministratif
+actor Examinateur
+actor Candidat
+actor Client
+actor SystemAdmin
+
+rectangle "Gestion des Audits" {
+  Auditeur -- (Saisir Inventaire)
+  Auditeur -- (Consigner Observations)
+  Auditeur -- (Importer Documents)
+  ResponsableMission -- (Planifier Audit)
+  ResponsableMission -- (Vérifier Observations)
+  ResponsableMission -- (Valider Rapport)
+  ResponsableMission -- (Suivre Statut Audit)
+  ServiceAdministratif -- (Gérer Facture)
+  ServiceAdministratif -- (Gérer Paiements)
+  ServiceAdministratif -- (Signaler Relance)
+  Auditeur -- (Activer Assistant IA)
+  Auditeur -- (Recommander Suivi)
+}
+
+rectangle "Gestion des Certifications" {
+  Examinateur -- (Préparer Session)
+  Examinateur -- (Superviser Examen)
+  Examinateur -- (Valider Résultat)
+  Candidat -- (Acheter Certification)
+  Candidat -- (Accéder Documents)
+  Candidat -- (Répondre Épreuve)
+  Candidat -- (Consulter Résultat)
+}
+
+rectangle "Gestion Clients & Contrats" {
+  Client -- (Signer Lettre de Mission)
+  Client -- (Signer Mandat)
+  ServiceAdministratif -- (Créer Dossier Client)
+  ServiceAdministratif -- (Associer Audit à Client)
+  ServiceAdministratif -- (Archiver Documents Contractuels)
+}
+
+rectangle "Administration Système" {
+  SystemAdmin -- (Créer/Modifier Rôles)
+  SystemAdmin -- (Gérer Permissions)
+  SystemAdmin -- (Gérer Utilisateurs)
+  SystemAdmin -- (Déployer & Mettre à jour IA)
+  SystemAdmin -- (Auditer Accès)
+  SystemAdmin -- (Mettre en œuvre Politique Rétention)
+}
+
+note right: Les rôles sont exclusifs\net l’accès est filtré par le\ncontexte (Audit / Certification)
+
+@enduml

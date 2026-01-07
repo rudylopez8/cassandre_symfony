@@ -1,0 +1,35 @@
+:root {
+  --bs-primary: #004d99;      /* Bleu foncé – brand color */
+  --bs-secondary: #e6e6e6;    /* Gris clair */
+  --bs-success: #4caf50;
+  --bs-danger: #d32f2f;
+  --bs-warning: #ff9800;
+  --bs-info: #2196f3;
+
+  --font-family-base: 'Inter', system-ui, sans-serif;
+  --bs-font-weight-bold: 600;
+}
+
+body {
+  font-family: var(--font-family-base);
+}
+
+.navbar-brand {
+  font-weight: var(--bs-font-weight-bold);
+  font-size: 1.25rem;
+}
+
+.card-title {
+  font-weight: var(--bs-font-weight-bold);
+}
+
+/* Responsive card columns */
+@media (min-width: 576px) {
+  .card-columns-sm { column-count: 2; }
+}
+@media (min-width: 768px) {
+  .card-columns-md { column-count: 3; }
+}
+@media (min-width: 992px) {
+  .card-columns-lg { column-count: 4; }
+}

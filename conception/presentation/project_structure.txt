@@ -1,0 +1,972 @@
+--- Structure du Projet dans C:\REALCONSEIL\Rudy_CDA\Fil_Rouge_Cassandre\tp_maquette\presentation ---
+
+### Arborescence du Projet ###
+    ├── admin.html
+    ├── audit-details.html
+    ├── audit.html
+    ├── certification-details.html
+    ├── certification.html
+    ├── index.html
+    ├── login.html
+    ├── **css/**
+        ├── style.css
+    ├── **js/**
+        ├── main.js
+
+================================================================================
+
+### Contenu des Fichiers Inclus ###
+
+
+--- admin.html ---
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Administration – Cassandre Communication</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .section-title {
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Cassandre</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">Tableau de bord</a></li>
+          <li class="nav-item"><a class="nav-link" href="audit.html">Audits</a></li>
+          <li class="nav-item"><a class="nav-link" href="certification.html">Certifications</a></li>
+          <li class="nav-item"><a class="nav-link active" href="admin.html">Administration</a></li>
+        </ul>
+        <span class="navbar-text me-3">Bonjour, <strong>Admin</strong></span>
+        <a href="login.html" class="btn btn-outline-light">Déconnexion</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container py-4">
+    <h2>Administration du Système</h2>
+
+    <!-- ------------------------------------------------------------------ -->
+    <!-- 1. Gestion des Rôles -->
+    <!-- ------------------------------------------------------------------ -->
+    <section>
+      <h3 class="section-title"><i class="fa-solid fa-user-shield me-2"></i>Gestion des Rôles</h3>
+
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <table class="table table-sm table-hover align-middle">
+            <thead class="table-light">
+              <tr>
+                <th>ID</th>
+                <th>Nom</th>
+                <th>Description</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="roles-table">
+              <!-- Exemples statiques – à alimenter dynamiquement -->
+              <tr>
+                <td>1</td>
+                <td>Auditeur</td>
+                <td>Collecte d’observations, génération de rapports</td>
+                <td>
+                  <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#roleModal" data-id="1" data-name="Auditeur" data-desc="Collecte d’observations, génération de rapports">Éditer</button>
+                  <button class="btn btn-sm btn-outline-danger">Supprimer</button>
+                </td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>Admin Système</td>
+                <td>Gestion utilisateurs, déploiement IA</td>
+                <td>
+                  <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#roleModal" data-id="2" data-name="Admin Système" data-desc="Gestion utilisateurs, déploiement IA">Éditer</button>
+                  <button class="btn btn-sm btn-outline-danger">Supprimer</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="col-md-6">
+          <button class="btn btn-success w-100" data-bs-toggle="modal" data-bs-target="#roleModal">
+            <i class="fa-solid fa-plus me-1"></i> Créer un rôle
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ------------------------------------------------------------------ -->
+    <!-- 2. Gestion des Permissions -->
+    <!-- ------------------------------------------------------------------ -->
+    <section>
+      <h3 class="section-title"><i class="fa-solid fa-key me-2"></i>Gestion des Permissions</h3>
+
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <table class="table table-sm table-hover align-middle">
+            <thead class="table-light">
+              <tr>
+                <th>ID</th>
+                <th>Nom</th>
+                <th>Description</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="permissions-table">
+              <!-- Exemple statique -->
+              <tr>
+                <td>1</td>
+                <td>view_reports</td>
+                <td>Accès aux rapports d’audit</td>
+                <td>
+                  <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#permissionModal" data-id="1" data-name="view_reports" data-desc="Accès aux rapports d’audit">Éditer</button>
+                  <button class="btn btn-sm btn-outline-danger">Supprimer</button>
+                </td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>deploy_ai</td>
+                <td>Déployer et mettre à jour le modèle IA</td>
+                <td>
+                  <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#permissionModal" data-id="2" data-name="deploy_ai" data-desc="Déployer et mettre à jour le modèle IA">Éditer</button>
+                  <button class="btn btn-sm btn-outline-danger">Supprimer</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="col-md-6">
+          <button class="btn btn-success w-100" data-bs-toggle="modal" data-bs-target="#permissionModal">
+            <i class="fa-solid fa-plus me-1"></i> Créer une permission
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ------------------------------------------------------------------ -->
+    <!-- 3. Gestion des Utilisateurs -->
+    <!-- ------------------------------------------------------------------ -->
+    <section>
+      <h3 class="section-title"><i class="fa-solid fa-users me-2"></i>Gestion des Utilisateurs</h3>
+
+      <div class="row mb-3">
+        <div class="col-md-8">
+          <table class="table table-sm table-hover align-middle">
+            <thead class="table-light">
+              <tr>
+                <th>ID</th>
+                <th>Email</th>
+                <th>Rôle</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="users-table">
+              <!-- Exemple statique -->
+              <tr>
+                <td>1</td>
+                <td>auditor@exemple.com</td>
+                <td>Auditeur</td>
+                <td>Actif</td>
+                <td>
+                  <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#userModal" data-id="1" data-email="auditor@exemple.com" data-role="Auditeur">Éditer</button>
+                  <button class="btn btn-sm btn-outline-danger">Supprimer</button>
+                </td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>admin@exemple.com</td>
+                <td>Admin Système</td>
+                <td>Actif</td>
+                <td>
+                  <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#userModal" data-id="2" data-email="admin@exemple.com" data-role="Admin Système">Éditer</button>
+                  <button class="btn btn-sm btn-outline-danger">Supprimer</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="col-md-4">
+          <button class="btn btn-success w-100" data-bs-toggle="modal" data-bs-target="#userModal">
+            <i class="fa-solid fa-plus me-1"></i> Créer un utilisateur
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ------------------------------------------------------------------ -->
+    <!-- 4. Déploiement de l’IA -->
+    <!-- ------------------------------------------------------------------ -->
+    <section>
+      <h3 class="section-title"><i class="fa-solid fa-brain me-2"></i>Déploiement IA</h3>
+      <p>Gestion du cycle de vie du modèle d’IA (déploiement, versioning, rollback).</p>
+
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Version actuelle</label>
+          <input type="text" class="form-control" value="v1.0.0" disabled>
+        </div>
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Statut du déploiement</label>
+          <input type="text" class="form-control" value="En production" disabled>
+        </div>
+        <div class="col-12 text-end">
+          <button class="btn btn-primary"><i class="fa-solid fa-rocket me-1"></i> Déployer nouvelle version</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ------------------------------------------------------------------ -->
+    <!-- 5. Politique de rétention -->
+    <!-- ------------------------------------------------------------------ -->
+    <section>
+      <h3 class="section-title"><i class="fa-solid fa-calendar-clock me-2"></i>Politique de Rétention</h3>
+      <p>Configuration des règles de conservation des données et des actions automatiques après expiration.</p>
+
+      <table class="table table-sm table-hover align-middle">
+        <thead class="table-light">
+          <tr>
+            <th>Entité</th>
+            <th>Durée (jours)</th>
+            <th>Action à l’expiration</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="retention-table">
+          <tr>
+            <td>AuditMission</td>
+            <td>365</td>
+            <td>Archive</td>
+            <td>
+              <button class="btn btn-sm btn-outline-primary">Éditer</button>
+              <button class="btn btn-sm btn-outline-danger">Supprimer</button>
+            </td>
+          </tr>
+          <tr>
+            <td>Invoice</td>
+            <td>730</td>
+            <td>Delete</td>
+            <td>
+              <button class="btn btn-sm btn-outline-primary">Éditer</button>
+              <button class="btn btn-sm btn-outline-danger">Supprimer</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <button class="btn btn-success"><i class="fa-solid fa-plus me-1"></i> Ajouter une règle</button>
+    </section>
+  </main>
+
+  <!-- ------------------------------------------------------------------ -->
+  <!-- Modals -->
+  <!-- ------------------------------------------------------------------ -->
+
+  <!-- Role Modal -->
+  <div class="modal fade" id="roleModal" tabindex="-1" aria-labelledby="roleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form id="roleForm">
+          <div class="modal-header">
+            <h5 class="modal-title" id="roleModalLabel">Créer / Éditer un rôle</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <input type="hidden" id="role-id" name="id">
+            <div class="mb-3">
+              <label for="role-name" class="form-label">Nom</label>
+              <input type="text" class="form-control" id="role-name" name="name" required>
+            </div>
+            <div class="mb-3">
+              <label for="role-desc" class="form-label">Description</label>
+              <textarea class="form-control" id="role-desc" name="description" rows="3"></textarea>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+            <button type="submit" class="btn btn-primary">Enregistrer</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Permission Modal -->
+  <div class="modal fade" id="permissionModal" tabindex="-1" aria-labelledby="permissionModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form id="permissionForm">
+          <div class="modal-header">
+            <h5 class="modal-title" id="permissionModalLabel">Créer / Éditer une permission</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <input type="hidden" id="permission-id" name="id">
+            <div class="mb-3">
+              <label for="permission-name" class="form-label">Nom</label>
+              <input type="text" class="form-control" id="permission-name" name="name" required>
+            </div>
+            <div class="mb-3">
+              <label for="permission-desc" class="form-label">Description</label>
+              <textarea class="form-control" id="permission-desc" name="description" rows="3"></textarea>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+            <button type="submit" class="btn btn-primary">Enregistrer</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- User Modal -->
+  <div class="modal fade" id="userModal" tabindex="-1" aria-labelledby="userModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form id="userForm">
+          <div class="modal-header">
+            <h5 class="modal-title" id="userModalLabel">Créer / Éditer un utilisateur</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <input type="hidden" id="user-id" name="id">
+            <div class="mb-3">
+              <label for="user-email" class="form-label">Email</label>
+              <input type="email" class="form-control" id="user-email" name="email" required>
+            </div>
+            <div class="mb-3">
+              <label for="user-role" class="form-label">Rôle</label>
+              <select class="form-select" id="user-role" name="role" required>
+                <option value="Auditeur">Auditeur</option>
+                <option value="ResponsableMission">Responsable de mission</option>
+                <option value="ServiceAdministratif">Service administratif</option>
+                <option value="Examinateur">Examinateur</option>
+                <option value="Client">Client</option>
+                <option value="Admin Système">Admin Système</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="user-status" class="form-label">Statut</label>
+              <select class="form-select" id="user-status" name="status" required>
+                <option value="ACTIVE">Actif</option>
+                <option value="INACTIVE">Inactif</option>
+                <option value="DELETED">Supprimé</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="user-password" class="form-label">Mot de passe (réinitialiser)</label>
+              <input type="password" class="form-control" id="user-password" name="password" placeholder="Nouveau mot de passe">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+            <button type="submit" class="btn btn-primary">Enregistrer</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ------------------------------------------------------------------ -->
+  <!-- Script JavaScript – gestion des modaux -->
+  <!-- ------------------------------------------------------------------ -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // ------------------------------------
+    // Remplissage des modaux lors de l'édition
+    // ------------------------------------
+    document.addEventListener('DOMContentLoaded', () => {
+      // Role modal
+      const roleModalEl = document.getElementById('roleModal');
+      roleModalEl.addEventListener('show.bs.modal', event => {
+        const button = event.relatedTarget;
+        const id = button.dataset.id;
+        const name = button.dataset.name;
+        const desc = button.dataset.desc;
+        const modal = bootstrap.Modal.getInstance(roleModalEl);
+        document.getElementById('role-id').value = id || '';
+        document.getElementById('role-name').value = name || '';
+        document.getElementById('role-desc').value = desc || '';
+      });
+
+      // Permission modal
+      const permModalEl = document.getElementById('permissionModal');
+      permModalEl.addEventListener('show.bs.modal', event => {
+        const button = event.relatedTarget;
+        const id = button.dataset.id;
+        const name = button.dataset.name;
+        const desc = button.dataset.desc;
+        document.getElementById('permission-id').value = id || '';
+        document.getElementById('permission-name').value = name || '';
+        document.getElementById('permission-desc').value = desc || '';
+      });
+
+      // User modal
+      const userModalEl = document.getElementById('userModal');
+      userModalEl.addEventListener('show.bs.modal', event => {
+        const button = event.relatedTarget;
+        const id = button.dataset.id;
+        const email = button.dataset.email;
+        const role = button.dataset.role;
+        document.getElementById('user-id').value = id || '';
+        document.getElementById('user-email').value = email || '';
+        document.getElementById('user-role').value = role || 'Auditeur';
+        // status & password left as defaults
+      });
+
+      // Form submissions (placeholders – to be replaced with real API calls)
+      const roleForm = document.getElementById('roleForm');
+      roleForm.addEventListener('submit', e => {
+        e.preventDefault();
+        // TODO: send data to backend
+        bootstrap.Modal.getInstance(roleModalEl).hide();
+        alert('Rôle enregistré (simulation)');
+      });
+
+      const permForm = document.getElementById('permissionForm');
+      permForm.addEventListener('submit', e => {
+        e.preventDefault();
+        bootstrap.Modal.getInstance(permModalEl).hide();
+        alert('Permission enregistrée (simulation)');
+      });
+
+      const userForm = document.getElementById('userForm');
+      userForm.addEventListener('submit', e => {
+        e.preventDefault();
+        bootstrap.Modal.getInstance(userModalEl).hide();
+        alert('Utilisateur enregistré (simulation)');
+      });
+    });
+  </script>
+</body>
+</html>
+
+----------------------------------------
+
+--- audit-details.html ---
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Détails Audit – Cassandre Communication</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .tab-content { margin-top: 1rem; }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <!-- ... -->
+  <main class="container py-4">
+    <h2>Avis Audit : Acme Corp. – AUD-2025-01</h2>
+
+    <ul class="nav nav-tabs" id="auditTab" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="overview-tab" data-bs-toggle="tab" data-bs-target="#overview" type="button" role="tab">Vue d’ensemble</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="observations-tab" data-bs-toggle="tab" data-bs-target="#observations" type="button" role="tab">Observations</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="inventory-tab" data-bs-toggle="tab" data-bs-target="#inventory" type="button" role="tab">Inventaire</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="report-tab" data-bs-toggle="tab" data-bs-target="#report" type="button" role="tab">Rapport</button>
+      </li>
+    </ul>
+
+    <div class="tab-content" id="auditTabContent">
+      <!-- Vue d’ensemble -->
+      <div class="tab-pane fade show active" id="overview" role="tabpanel">
+        <div class="row mt-3">
+          <div class="col-md-6">
+            <h5>Statut</h5>
+            <p><span class="badge bg-warning text-dark">En cours</span></p>
+          </div>
+          <div class="col-md-6">
+            <h5>Dates</h5>
+            <p>Début : 12/07/2025 – Fin prévue : 19/07/2025</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Observations -->
+      <div class="tab-pane fade" id="observations" role="tabpanel">
+        <table class="table table-sm table-hover align-middle">
+          <thead>
+            <tr>
+              <th>Zone</th>
+              <th>Description</th>
+              <th>Criticité</th>
+              <th>Récommandation</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Réseau interne</td>
+              <td>Port 22 ouvert sur tous les serveurs</td>
+              <td><span class="badge bg-danger">Haut</span></td>
+              <td>Restreindre l’accès SSH aux IP whitelistées</td>
+            </tr>
+            <!-- plus de lignes… -->
+          </tbody>
+        </table>
+        <button class="btn btn-sm btn-outline-primary">Ajouter Observation</button>
+      </div>
+
+      <!-- Inventaire -->
+      <div class="tab-pane fade" id="inventory" role="tabpanel">
+        <table class="table table-sm table-hover align-middle">
+          <thead>
+            <tr>
+              <th>Équipement</th>
+              <th>Rôle</th>
+              <th>Identifiant</th>
+              <th>Notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Serveur Web</td>
+              <td>Application</td>
+              <td>srv-web-01</td>
+              <td>Certificat expirant 15/08/2025</td>
+            </tr>
+          </tbody>
+        </table>
+        <button class="btn btn-sm btn-outline-primary">Ajouter Inventaire</button>
+      </div>
+
+      <!-- Rapport -->
+      <div class="tab-pane fade" id="report" role="tabpanel">
+        <p>Le rapport a encore besoin d’être finalisé.</p>
+        <button class="btn btn-sm btn-outline-success">Générer Rapport</button>
+      </div>
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
+----------------------------------------
+
+--- audit.html ---
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Audits – Cassandre Communication</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Navbar (identique à index.html) – copie ou inclure via partial -->
+  <!-- ... -->
+  <main class="container py-4">
+    <h2>Liste des Audits</h2>
+
+    <div class="mb-3 d-flex justify-content-between">
+      <div>
+        <button class="btn btn-success"><i class="fa-solid fa-plus me-1"></i> Nouvel Audit</button>
+      </div>
+      <div>
+        <input type="search" class="form-control" placeholder="Rechercher…">
+      </div>
+    </div>
+
+    <table class="table table-hover table-striped align-middle">
+      <thead class="table-light">
+        <tr>
+          <th>#</th>
+          <th>Client</th>
+          <th>Référence</th>
+          <th>Statut</th>
+          <th>Planifié le</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>001</td>
+          <td>Acme Corp.</td>
+          <td>AUD-2025-01</td>
+          <td><span class="badge bg-warning text-dark">En cours</span></td>
+          <td>2025‑07‑12</td>
+          <td>
+            <a href="audit-details.html" class="btn btn-sm btn-outline-primary">Détails</a>
+          </td>
+        </tr>
+        <!-- plus de lignes… -->
+      </tbody>
+    </table>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
+----------------------------------------
+
+--- certification-details.html ---
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Détails Certification – Cassandre Communication</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Navbar -->
+  <!-- ... -->
+  <main class="container py-4">
+    <h2>Certified Ethical Hacker (CEH) – Session 2025‑09‑01</h2>
+
+    <div class="row g-4 mt-3">
+      <div class="col-md-8">
+        <h4>Programme</h4>
+        <ol>
+          <li>Introduction aux tests d’intrusion</li>
+          <li>Reconnaissance et scanning</li>
+          <li>Exploitation des vulnérabilités</li>
+          <li>Post‑exploitation</li>
+          <li>Rapport &amp; bonnes pratiques</li>
+        </ol>
+
+        <h4>Supports pédagogiques</h4>
+        <ul>
+          <li>Slides (PDF)</li>
+          <li>Enregistrements vidéo</li>
+          <li>Exercices pratiques</li>
+        </ul>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card shadow-sm h-100">
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title">Infos de la session</h5>
+            <p><strong>Date :</strong> 1er septembre 2025</p>
+            <p><strong>Heure :</strong> 9h – 17h</p>
+            <p><strong>Coût :</strong> <span class="text-primary">$399</span></p>
+            <p class="mt-auto">
+              <a href="login.html" class="btn btn-success w-100">S’inscrire</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
+----------------------------------------
+
+--- certification.html ---
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Certifications – Cassandre Communication</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Navbar -->
+  <!-- ... -->
+  <main class="container py-4">
+    <h2>Catalogue des Certifications</h2>
+
+    <div class="row g-3 mt-4">
+      <!-- Card Exemple -->
+      <div class="col-sm-6 col-lg-4">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title">Certified Ethical Hacker (CEH)</h5>
+            <p class="card-text">Apprenez à identifier les vulnérabilités des réseaux.</p>
+            <div class="mt-auto">
+              <p class="mb-1"><strong>Prix : </strong><span class="text-primary">$399</span></p>
+              <a href="certification-details.html" class="btn btn-sm btn-outline-primary w-100">En savoir plus</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Répéter pour d’autres certifications -->
+    </div>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
+----------------------------------------
+
+--- index.html ---
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Tableau de bord – Cassandre Communication</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Cassandre</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item"><a class="nav-link active" href="#">Tableau de bord</a></li>
+          <li class="nav-item"><a class="nav-link" href="audit.html">Audits</a></li>
+          <li class="nav-item"><a class="nav-link" href="certification.html">Certifications</a></li>
+          <li class="nav-item"><a class="nav-link" href="admin.html">Administration</a></li>
+        </ul>
+        <span class="navbar-text me-3">Bonjour, <strong>Auditeur</strong></span>
+        <a href="login.html" class="btn btn-outline-light">Déconnexion</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main content -->
+  <main class="container py-4">
+    <h2>Tableau de bord</h2>
+
+    <div class="row g-3 my-4">
+      <div class="col-sm-6 col-lg-3">
+        <div class="card shadow-sm h-100">
+          <div class="card-body">
+            <div class="d-flex align-items-center">
+              <i class="fa-solid fa-clipboard-list fa-2x text-primary me-3"></i>
+              <div>
+                <h5 class="card-title mb-0">Audits en cours</h5>
+                <h3 class="card-text">7</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Répéter pour les autres métriques : Factures à facturer, Certifications en attente, etc. -->
+      <div class="col-sm-6 col-lg-3">
+        <div class="card shadow-sm h-100">
+          <div class="card-body">
+            <div class="d-flex align-items-center">
+              <i class="fa-solid fa-file-invoice-dollar fa-2x text-success me-3"></i>
+              <div>
+                <h5 class="card-title mb-0">Factures en attente</h5>
+                <h3 class="card-text">3</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-lg-3">
+        <div class="card shadow-sm h-100">
+          <div class="card-body">
+            <div class="d-flex align-items-center">
+              <i class="fa-solid fa-certificate fa-2x text-warning me-3"></i>
+              <div>
+                <h5 class="card-title mb-0">Certifications en cours</h5>
+                <h3 class="card-text">5</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-lg-3">
+        <div class="card shadow-sm h-100">
+          <div class="card-body">
+            <div class="d-flex align-items-center">
+              <i class="fa-solid fa-user-check fa-2x text-info me-3"></i>
+              <div>
+                <h5 class="card-title mb-0">Utilisateurs actifs</h5>
+                <h3 class="card-text">12</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cards listing des missions récentes -->
+    <h4>Récentes missions</h4>
+    <div class="row g-3 card-columns-sm card-columns-md card-columns-lg">
+      <!-- Exemple de card -->
+      <div class="col card">
+        <div class="card h-100">
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title">Audit Système XYZ</h5>
+            <p class="card-text"><small class="text-muted">Client: Acme Corp.</small></p>
+            <p class="card-text"><strong>Statut :</strong> <span class="badge bg-warning text-dark">En cours</span></p>
+            <div class="mt-auto d-flex justify-content-between">
+              <a href="audit-details.html" class="btn btn-sm btn-outline-primary">Détails</a>
+              <a href="#" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#aiModal">Assistant IA</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Répéter pour d’autres missions -->
+    </div>
+  </main>
+
+  <!-- Modal d’assistant IA -->
+  <div class="modal fade" id="aiModal" tabindex="-1" aria-labelledby="aiModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="aiModalLabel">Assistant IA - Vérifications complémentaires</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <p>Voici les points à vérifier selon le scénario d’audit :</p>
+          <ul>
+            <li>Vérifier les certificats X.509 des serveurs web.</li>
+            <li>Analyser les logs d’accès des 30 derniers jours.</li>
+            <li>Valider les droits d’accès au fichier <code>/etc/passwd</code> (exclusif).</li>
+          </ul>
+          <p class="text-muted">*Ces suggestions proviennent d’un modèle IA local. Aucune donnée client n’est envoyée vers un serveur externe.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+          <button type="button" class="btn btn-primary">Ajouter aux Observations</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
+----------------------------------------
+
+--- login.html ---
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Connexion – Cassandre Communication</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    body { background: var(--bs-secondary); }
+    .login-card { max-width: 400px; margin: 5rem auto; }
+  </style>
+</head>
+<body>
+  <div class="login-card card shadow-sm">
+    <div class="card-body text-center">
+      <i class="fa-solid fa-shield-halved fa-3x mb-3" style="color:var(--bs-primary);"></i>
+      <h4 class="card-title mb-4">Connexion</h4>
+      <form>
+        <div class="mb-3 text-start">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" id="email" class="form-control" placeholder="vous@exemple.com">
+        </div>
+        <div class="mb-3 text-start">
+          <label for="password" class="form-label">Mot de passe</label>
+          <input type="password" id="password" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Se connecter</button>
+      </form>
+      <p class="mt-3"><a href="#">Mot de passe oublié ?</a></p>
+    </div>
+  </div>
+</body>
+</html>
+
+----------------------------------------
+
+--- css\style.css ---
+:root {
+  --bs-primary: #004d99;      /* Bleu foncé – brand color */
+  --bs-secondary: #e6e6e6;    /* Gris clair */
+  --bs-success: #4caf50;
+  --bs-danger: #d32f2f;
+  --bs-warning: #ff9800;
+  --bs-info: #2196f3;
+
+  --font-family-base: 'Inter', system-ui, sans-serif;
+  --bs-font-weight-bold: 600;
+}
+
+body {
+  font-family: var(--font-family-base);
+}
+
+.navbar-brand {
+  font-weight: var(--bs-font-weight-bold);
+  font-size: 1.25rem;
+}
+
+.card-title {
+  font-weight: var(--bs-font-weight-bold);
+}
+
+/* Responsive card columns */
+@media (min-width: 576px) {
+  .card-columns-sm { column-count: 2; }
+}
+@media (min-width: 768px) {
+  .card-columns-md { column-count: 3; }
+}
+@media (min-width: 992px) {
+  .card-columns-lg { column-count: 4; }
+}
+
+----------------------------------------
+
+--- js\main.js ---
+// js/main.js – Exemple d’ajout d’une observation via le modal IA
+document.addEventListener('DOMContentLoaded', () => {
+  const btnAdd = document.querySelector('#aiModal .btn-primary');
+  const textarea = document.querySelector('#aiModal textarea');
+
+  btnAdd?.addEventListener('click', () => {
+    const content = `
+    <p><strong>Observation IA :</strong></p>
+    <ul>
+      <li>Vérifier l'authentification MFA.</li>
+      <li>Examiner la segmentation réseau.</li>
+    </ul>
+    `;
+    // Simuler l’ajout dans la section observations
+    const obsSection = document.querySelector('#observations tbody');
+    const row = document.createElement('tr');
+    row.innerHTML = `
+      <td>Security</td>
+      <td>IA suggère de vérifier la MFA.</td>
+      <td><span class="badge bg-info text-dark">Moyen</span></td>
+      <td>Valider la configuration MFA.</td>
+    `;
+    obsSection?.appendChild(row);
+    // Fermer modal
+    const modal = bootstrap.Modal.getInstance(document.getElementById('aiModal'));
+    modal?.hide();
+  });
+})
+
+----------------------------------------

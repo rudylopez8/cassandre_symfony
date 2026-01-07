@@ -1,0 +1,193 @@
+@startuml ClassDiagram
+!define Table(x) class x << (T,#FFAAAA) >>
+!define View(x) class x << (V,#AAFFAA) >>
+
+'=== Entités Principales ===
+Table(User) {
+  -id : UUID
+  -login : String
+  -passwordHash : String
+  -email : String
+  -role : Role
+  -status : Enum{ACTIVE,INACTIVE,DELETED}
+}
+Table(Role) {
+  -id : UUID
+  -name : String
+  -description : String
+}
+Table(Permission) {
+  -id : UUID
+  -name : String
+  -description : String
+}
+
+' Relations rôle / permission
+Role "1" -- "*" Permission : grants >
+
+'=== Clients & Contrats ===
+Table(Client) {
+  -id : UUID
+  -name : String
+  -address : String
+  -contactEmail : String
+  -phone : String
+  -industry : String
+}
+Table(LetterOfMission) {
+  -id : UUID
+  -clientId : UUID
+  -missionRef : String
+  -signedDate : Date
+  -terms : Text
+}
+Table(Mandate) {
+  -id : UUID
+  -clientId : UUID
+  -missionRef : String
+  -signedDate : Date
+  -scope : Text
+}
+
+Client "1" -- "*" LetterOfMission : has >
+Client "1" -- "*" Mandate : has >
+
+'=== Audit ===
+Table(AuditMission) {
+  -id : UUID
+  -clientId : UUID
+  -ref : String
+  -startDate : Date
+  -endDate : Date
+  -status : Enum{PLANNED,IN_PROGRESS,COMPLETED,ARCHIVED}
+  -responsibleId : UUID
+  -auditType : String
+}
+Table(Observation) {
+  -id : UUID
+  -auditId : UUID
+  -auditorId : UUID
+  -zone : String
+  -description : Text
+  -criticality : Enum{LOW,MEDIUM,HIGH,CRITICAL}
+  -recommendation : Text
+  -timestamp : DateTime
+}
+Table(InventoryItem) {
+  -id : UUID
+  -auditId : UUID
+  -equipmentName : String
+  -role : String
+  -identifier : String
+  -notes : Text
+}
+Table(Document) {
+  -id : UUID
+  -auditId : UUID
+  -title : String
+  -type : Enum{REPORT,LOG,IMAGE,PDF}
+  -path : String
+  -createdAt : DateTime
+}
+Table(Report) {
+  -id : UUID
+  -auditId : UUID
+  -content : Text
+  -generatedBy : UUID
+  -generatedAt : DateTime
+  -isFinal : Boolean
+}
+
+AuditMission "1" -- "*" Observation : contains >
+AuditMission "1" -- "*" InventoryItem : contains >
+AuditMission "1" -- "*" Document : contains >
+AuditMission "1" -- "0..1" Report : generates >
+
+'=== Facturation ===
+Table(Invoice) {
+  -id : UUID
+  -auditId : UUID
+  -clientId : UUID
+  -amount : Decimal
+  -currency : String
+  -status : Enum{DRAFT,PENDING,PAYED,OVERDUE}
+  -issueDate : Date
+  -dueDate : Date
+}
+Table(Payment) {
+  -id : UUID
+  -invoiceId : UUID
+  -amount : Decimal
+  -method : String
+  -status : Enum{PENDING,COMPLETED,FAILED}
+  -paidAt : DateTime
+}
+
+Invoice "1" -- "*" Payment : has >
+
+'=== Certifications ===
+Table(Certification) {
+  -id : UUID
+  -name : String
+  -description : Text
+  -price : Decimal
+}
+Table(Session) {
+  -id : UUID
+  -certId : UUID
+  -scheduledAt : DateTime
+  -examinerId : UUID
+  -location : String
+}
+Table(Candidate) {
+  -id : UUID
+  -userId : UUID
+  -certId : UUID
+  -sessionId : UUID
+  -purchaseDate : DateTime
+  -status : Enum{ENROLLED,COMPLETED,FAILED}
+}
+Table(ExamResult) {
+  -id : UUID
+  -candidateId : UUID
+  -score : Integer
+  -passed : Boolean
+  -feedback : Text
+  -gradedAt : DateTime
+}
+
+Certification "1" -- "*" Session : offers >
+Session "1" -- "*" Candidate : hosts >
+Candidate "1" -- "*" ExamResult : produces >
+
+'=== Assistant IA ===
+Table(AIAssistantLog) {
+  -id : UUID
+  -auditorId : UUID
+  -auditId : UUID
+  -prompt : Text
+  -response : Text
+  -timestamp : DateTime
+}
+AuditMission "1" -- "*" AIAssistantLog : logs >
+
+'=== Politique Rétention ===
+Table(RetentionPolicy) {
+  -id : UUID
+  -entityType : String
+  -retentionPeriodDays : Integer
+  -actionOnExpiry : Enum{ANONYMIZE,DELETE,ARCHIVE}
+}
+Table(AnonymizationRecord) {
+  -id : UUID
+  -entityId : UUID
+  -entityType : String
+  -timestamp : DateTime
+  -performedBy : UUID
+}
+
+'--- Relations d’accès et sécurité ---
+User "1" --> Role
+Role "1" --> "*" Permission
+
+@enduml
