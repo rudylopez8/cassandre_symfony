@@ -6,6 +6,8 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 class User
@@ -309,6 +311,33 @@ class User
         $this->invoice = $invoice;
 
         return $this;
+    }
+
+    public function getUserIdentifier(): string
+    {
+        return $this->email;
+    }
+
+    /**
+    * Pont entre RBAC et Symfony
+    */
+    public function getRoles(): array
+    {
+        if (!$this->role) {
+            return [];
+        }
+
+        return ['ROLE_' . strtoupper($this->role->getName())];
+    }
+
+    public function getPassword(): string
+    {
+        return $this->passwordHash;
+    }
+
+    public function eraseCredentials(): void
+    {
+        // nothing
     }
 
 }

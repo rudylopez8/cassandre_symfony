@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Certification index{% endblock %}
+
+{% block body %}
+    <h1>Certification index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Duration</th>
+                <th>IsActive</th>
+                <th>CreatedAt</th>
+                <th>UpdatedAt</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for certification in certifications %}
+            <tr>
+                <td>{{ certification.id }}</td>
+                <td>{{ certification.name }}</td>
+                <td>{{ certification.description }}</td>
+                <td>{{ certification.price }}</td>
+                <td>{{ certification.duration }}</td>
+                <td>{{ certification.isActive ? 'Yes' : 'No' }}</td>
+                <td>{{ certification.createdAt ? certification.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ certification.updatedAt ? certification.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_certification_show', {'id': certification.id}) }}">show</a>
+                    <a href="{{ path('app_certification_edit', {'id': certification.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_certification_new') }}">Create new</a>
+{% endblock %}
